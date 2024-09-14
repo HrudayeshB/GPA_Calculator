@@ -31,11 +31,9 @@ You can easily host the project locally:
 2. Open the index.html file in your browser to start using the calculator.
 
 ## Contribution
-Feel free to fork this project, submit issues, or make pull requests to improve the SGPA Calculator. Contributions are welcome!
+Made by Hrudayesh Bhaskara. Feel free to fork this project, submit issues, or make pull requests to improve the SGPA Calculator. Contributions are welcome!
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
-You can modify the `git clone` URL with your actual repository URL, and feel free to tweak the details as needed.
-Made by Hrudayesh Bhaskara
 
