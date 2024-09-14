@@ -1,6 +1,6 @@
 # SGPA Calculator
 
-This is an SGPA (Semester Grade Point Average) calculator, designed to help students, especially those from VTU (Visvesvaraya Technological University) and other engineering colleges, easily compute their SGPA based on acquired grades and credits. 
+This is a very basic SGPA (Semester Grade Point Average) calculator, designed to help students, especially those from VTU (Visvesvaraya Technological University) and other engineering colleges, easily compute their SGPA based on acquired grades and credits. 
 
 In many colleges, the SGPA is not directly provided, and students are required to calculate it manually using their grades and credits. This tool simplifies that process.
 
