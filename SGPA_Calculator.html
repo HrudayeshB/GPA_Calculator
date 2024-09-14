@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGPA Calculator</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a1a2b; /* Dark Navy Blue */
+            color: #c7f73a; /* Lime Green */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 600px; /* Ensure this is consistent */
+    margin: 0 auto;
+    background-color: #12263f;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    /* Add a fixed width if needed */
+    width: 100%;
+}
+        h1 {
+            text-align: center;
+            color: #21c6b3; /* Teal */
+        }
+
+        h2 {
+            color: #21c6b3; /* Match color of the main heading */
+            text-align: center; /* Center the title */
+        }
+
+        .course-row, .course-edit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .course-row label, .course-edit input {
+            margin-right: 10px;
+            flex: 1;
+            text-align: left;
+        }
+
+        select {
+            width: 60%; /* 60% of the container width */
+            padding: 10px;
+            background-color: #0a1a2b;
+            color: #c7f73a;
+            border: none; /* No border */
+            border-radius: 4px;
+            font-size: 16px;
+            appearance: none; /* Remove default styling for dropdown */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='%23c7f73a' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 15px) center; /* Adjust arrow position */
+            background-size: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #21c6b3;
+            color: #0a1a2b;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #1daaa1;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #21c6b3;
+        }
+
+        footer {
+            background-color: transparent; /* No background color */
+            color: lightblue; /* Light blue text color */
+            text-align: center;
+            padding: 20px;
+            font-size: 10px;
+        }
+
+        .edit-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .edit-btn {
+            background-color: #ffca3a;
+            color: #0a1a2b;
+        }
+
+        .arrow-btn {
+            cursor: pointer;
+            color: black;
+            background-color: yellow;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px; /* Smooth curve */
+            width: 24px; /* Reduced size */
+            height: 24px; /* Reduced size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .delete-btn {
+            background-color: red;
+            border: none;
+            border-radius: 8px; /* Smooth curved square */
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .delete-btn img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .course-edit input[type="text"], .course-edit input[type="number"] {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #0a1a2b;
+            color: #c7f73a;
+            margin-right: 10px;
+            flex: 1;
+            max-width: 130px; /* Adjusted width */
+            border: 1px solid #c7f73a; /* Border to highlight input */
+        }
+
+        select {
+            width: 60%; /* Adjusted width of the grade dropdown */
+            padding: 10px;
+            background-color: #0a1a2b;
+            color: #c7f73a;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='%23c7f73a' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 10px) center; /* Adjusted drop down arrow position */
+            background-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>SGPA Calculator</h1>
+
+        <form id="gpaForm">
+            <div id="courseList">
+                <!-- Courses will be dynamically added here -->
+            </div>
+
+            <button type="button" onclick="calculateGPA()">Calculate SGPA</button>
+            <button type="button" class="edit-btn" onclick="toggleEdit()">Edit Courses</button>
+
+            <div class="result" id="result"></div>
+        </form>
+
+        <div class="edit-container" id="editContainer">
+            <h2>Edit Courses and Credits</h2>
+            <div id="editCourseList">
+                <!-- Editable courses will be dynamically added here -->
+            </div>
+            <button type="button" class="edit-btn" onclick="addCourse()">Add Course</button>
+            <button type="button" class="edit-btn" onclick="saveChanges()">Save Changes</button>
+        </div>
+    </div>
+
+  <!-- Footer -->
+    <footer>
+        Made by Hrudayesh Bhaskara
+    </footer>
+
+    <script>
+        const grade = {
+            "O": 10,
+            "A+": 9,
+            "A": 8,
+            "B+": 7,
+            "B": 6,
+            "C": 5,
+            "P": 4,
+            "F": 0
+        };
+
+        let courseCreds = {
+            "CPS": 3,
+            "CST": 3,
+            "FAW": 3,
+            "AIC": 3,
+            "ARM": 4,
+            "PCS": 4,
+            "UHV": 1,
+            "APL": 1
+        };
+
+        let courses = Object.keys(courseCreds);
+
+        function renderCourses() {
+            const courseList = document.getElementById('courseList');
+            courseList.innerHTML = '';
+            courses.forEach((course) => {
+                const courseDiv = document.createElement('div');
+                courseDiv.classList.add('course-row');
+                courseDiv.innerHTML = `
+                    <label for="${course}">${course}</label>
+                    <select id="${course}">
+                        <option value="O">O</option>
+                        <option value="A+">A+</option>
+                        <option value="A">A</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="P">P</option>
+                        <option value="F">F</option>
+                    </select>
+                `;
+                courseList.appendChild(courseDiv);
+            });
+        }
+
+        function renderEditableCourses() {
+            const editCourseList = document.getElementById('editCourseList');
+            editCourseList.innerHTML = '';
+            courses.forEach((course, index) => {
+                const editDiv = document.createElement('div');
+                editDiv.classList.add('course-edit');
+                editDiv.innerHTML = `
+                    <button type="button" class="arrow-btn" onclick="moveUp(${index})">⬆</button>
+                    <input type="text" id="editName-${course}" value="${course}">
+                    <input type="number" id="editCredits-${course}" value="${courseCreds[course]}" min="1" max="10">
+                    <button type="button" class="delete-btn" onclick="removeCourse(${index})">
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/trash.png" alt="Delete">
+                    </button>
+                `;
+                editCourseList.appendChild(editDiv);
+            });
+        }
+
+        function calculateGPA() {
+            let studentCreds = 0;
+            const totalCreds = Object.values(courseCreds).reduce((a, b) => a + b, 0);
+            courses.forEach((course) => {
+                const selectedGrade = document.getElementById(course).value;
+                studentCreds += grade[selectedGrade] * courseCreds[course];
+            });
+
+            const gpa = studentCreds / totalCreds;
+            document.getElementById('result').innerText = `GPA: ${gpa.toFixed(2)}`;
+        }
+
+        function toggleEdit() {
+            const editContainer = document.getElementById('editContainer');
+            if (editContainer.style.display === 'none' || !editContainer.style.display) {
+                editContainer.style.display = 'block';
+                renderEditableCourses();
+            } else {
+                editContainer.style.display = 'none';
+            }
+        }
+
+        function addCourse() {
+            const newCourse = prompt("Enter new course name:");
+            const newCredits = prompt("Enter credits for the new course:");
+            if (newCourse && newCredits) {
+                courses.push(newCourse);
+                courseCreds[newCourse] = parseInt(newCredits);
+                renderCourses();
+                renderEditableCourses();
+            }
+        }
+
+        function updateCourse(index) {
+            const newName = document.getElementById(`editName-${courses[index]}`).value;
+            const newCredits = parseInt(document.getElementById(`editCredits-${courses[index]}`).value);
+            if (newName && !isNaN(newCredits)) {
+                delete courseCreds[courses[index]];
+                courseCreds[newName] = newCredits;
+                courses[index] = newName;
+                renderCourses();
+                renderEditableCourses();
+            }
+        }
+
+        function removeCourse(index) {
+            const course = courses[index];
+            delete courseCreds[course];
+            courses.splice(index, 1);
+            renderCourses();
+            renderEditableCourses();
+        }
+
+        function moveUp(index) {
+            if (index > 0) {
+                [courses[index], courses[index - 1]] = [courses[index - 1], courses[index]];
+                renderCourses();
+                renderEditableCourses();
+            }
+        }
+
+        function saveChanges() {
+            localStorage.setItem('courses', JSON.stringify(courses));
+            localStorage.setItem('courseCreds', JSON.stringify(courseCreds));
+            renderCourses();
+            renderEditableCourses();
+            toggleEdit(); // Close the edit section after saving
+        }
+
+        function loadSavedData() {
+            const savedCourses = JSON.parse(localStorage.getItem('courses'));
+            const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
+
+            if (savedCourses) {
+                courses = savedCourses;
+                courseCreds = savedCourseCreds;
+            }
+        }
+
+        window.onload = function() {
+            loadSavedData();
+            renderCourses();
+        };
+    </script>
+</body>
+</html>
