@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         html,
         body {
@@ -193,6 +194,16 @@
             font-size: 10px;
         }
 
+        footer a {
+            margin-left: 10px; /* Space between text and the icon */
+            font-size: 16px; /* Size of the GitHub icon */
+            color: lightblue;
+        }
+
+        footer a:hover {
+            color: #21c6b3; /* Change icon color on hover */.  
+        }
+
         /* Remove arrows for number input fields */
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
@@ -237,7 +248,10 @@
 
     <!-- Footer -->
     <footer>
-        Made by Hrudayesh Bhaskara
+    Made by Hrudayesh Bhaskara
+    <a href="https://github.com/HrudayeshB/GPA_Calculator" target="_blank" style="color: lightblue; text-decoration: none;">
+        <i class="fab fa-github"></i>
+    </a>
     </footer>
 
     <script>
