@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a1a2b;
+            /* Dark Navy Blue */
+            color: #c7f73a;
+            /* Lime Green */
+            padding: 5px;
+            margin: 0;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #12263f;
+            /* Dark Navy Blue */
+            color: #c7f73a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            z-index: 1000;
+            /* Ensure it stays on top */
+        }
+
+        .header .logo {
+            display: flex;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .header .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: #c7f73a;
+            width: 40px;
+            /* Reduced width */
+            height: 40px;
+            /* Fixed height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 65px;
+            /* Adjusted to appear below the header and ensure button visibility */
+            right: 0;
+            width: 170px;
+            /* Slightly reduced width */
+            background-color: #12263f;
+            /* Same as header */
+            color: #c7f73a;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            /* Reduced padding */
+            z-index: 1000;
+            /*box-shadow: -2px 0 10px rgba(0, 0, 0, 0.7); /* Shadow to create a separation effect */
+            border-radius: 4px;
+            /* Rounded corners */
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #c7f73a;
+            padding: 15px;
+            /* Reduced gap between menu items */
+            font-size: 16px;
+            /* Adjusted font size */
+        }
+
+        .menu.active {
+            display: flex;
+            right: 0;
+            /* Align to right edge */
+        }
+
+        .container {
+            max-width: 100%;
+            /* Full width to fit mobile screens */
+            width: 350px;
+            /* Fixed width for mobile compatibility */
+            margin: 85px auto 20px;
+            /* Adjust margin to avoid overlap with header */
+            background-color: #12263f;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            box-sizing: border-box;
+            /* Include padding and border in element's total width and height */
+        }
+
+        h1 {
+            text-align: center;
+            color: #21c6b3;
+            /* Teal */
+        }
+
+        .semester-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .semester-row label {
+            flex: 1;
+            text-align: left;
+            margin-right: 10px;
+            /* Increased gap between label and text box */
+        }
+
+        .semester-row input {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #0a1a2b;
+            color: #c7f73a;
+            border: 1px solid #c7f73a;
+            /* Border to highlight input */
+            box-sizing: border-box;
+            /* Ensure padding is included within width */
+        }
+
+        .semester-row input.sgpabox {
+            width: 100px;
+            /* Reduced length for SGPA */
+            margin-right: 10px;
+            /* Padding between SGPA and Credits box */
+            border: none;
+        }
+
+        .semester-row input.creditsbox {
+            width: 100px;
+            /* Same length for Total Credits */
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #21c6b3;
+            color: #0a1a2b;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #1daaa1;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #21c6b3;
+        }
+
+        footer {
+            background-color: transparent;
+            /* No background color */
+            color: lightblue;
+            /* Light blue text color */
+            text-align: center;
+            padding: 20px;
+            font-size: 10px;
+        }
+
+        /* Remove arrows for number input fields */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <!-- <div class="logo">HB</div> -->
+        <div class="logo">
+            <img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <div class="menu" id="menu">
+        <a href="index.html">SGPA Calculator</a>
+        <a href="page1.html">CGPA Calculator</a>
+    </div>
+
+    <div class="container">
+        <h1>CGPA Calculator</h1>
+
+        <form id="cgpaForm">
+            <div id="semesterList">
+                <!-- Semesters will be dynamically added here -->
+            </div>
+            <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
+            <button type="button" onclick="saveChanges()">Save Changes</button>
+            <div class="result" id="cgpaOutput"></div> <!-- Output display -->
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Made by Hrudayesh Bhaskara
+    </footer>
+
+    <script>
+        let semesterData = [];
+
+        function renderSemesters() {
+            const semesterList = document.getElementById('semesterList');
+            semesterList.innerHTML = '';
+            for (let i = 0; i < 8; i++) {
+                const semesterDiv = document.createElement('div');
+                semesterDiv.classList.add('semester-row');
+                semesterDiv.innerHTML = `
+                    <label>Sem ${i + 1}</label>
+                    <input type="text" id="sgpa-${i + 1}" class="sgpabox" placeholder="SGPA">
+                    <input type="number" id="credits-${i + 1}" class="creditsbox" placeholder="Total Credits">
+                `;
+                semesterList.appendChild(semesterDiv);
+            }
+        }
+
+        function calculateCGPA() {
+            let totalCredits = 0;
+            let weightedSGPA = 0;
+
+            for (let i = 1; i <= 8; i++) {
+                const sgpa = parseFloat(document.getElementById(`sgpa-${i}`).value) || 0;
+                const credits = parseFloat(document.getElementById(`credits-${i}`).value) || 0;
+                weightedSGPA += sgpa * credits;
+                totalCredits += credits;
+            }
+
+            const cgpa = totalCredits > 0 ? weightedSGPA / totalCredits : 0;
+            document.getElementById('cgpaOutput').innerText = `CGPA: ${cgpa.toFixed(2)}`;
+        }
+
+        function saveChanges() {
+            const savedData = [];
+            for (let i = 1; i <= 8; i++) {
+                const sgpa = document.getElementById(`sgpa-${i}`).value;
+                const credits = document.getElementById(`credits-${i}`).value;
+                if (sgpa || credits) {
+                    savedData.push({ sgpa, credits });
+                }
+            }
+            localStorage.setItem('semesterData', JSON.stringify(savedData));
+        }
+
+        function loadSavedData() {
+            const savedData = JSON.parse(localStorage.getItem('semesterData'));
+            if (savedData) {
+                savedData.forEach((data, index) => {
+                    if (index < 8) {
+                        document.getElementById(`sgpa-${index + 1}`).value = data.sgpa;
+                        document.getElementById(`credits-${index + 1}`).value = data.credits;
+                    }
+                });
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+
+        window.onload = function () {
+            renderSemesters();
+            loadSavedData();
+        };
+    </script>
+</body>
+
+</html>

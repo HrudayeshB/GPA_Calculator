@@ -80,7 +80,7 @@
             padding: 20px;
             /* Reduced padding */
             z-index: 1000;
-            //box-shadow: -2px 0 10px rgba(0, 0, 0, 0.7); /* Shadow to create a separation effect */
+            /* box-shadow: -2px 0 10px rgba(0, 0, 0, 0.7); /* Shadow to create a separation effect */
             border-radius: 4px;
             /* Rounded corners */
         }
@@ -211,7 +211,7 @@
         .arrow-btn {
             cursor: pointer;
             color: black;
-            background-color: yellow;
+            background-color: limegreen;
             margin-right: 10px;
             border: none;
             border-radius: 4px;
@@ -226,7 +226,7 @@
         }
 
         .delete-btn {
-            background-color: red;
+            background-color: rgb(179, 10, 10);
             border: none;
             border-radius: 8px;
             /* Smooth curved square */
@@ -254,7 +254,8 @@
             flex: 1;
             max-width: 130px;
             /* Adjusted width */
-            border: 1px solid #c7f73a;
+            /* border: 1px solid #c7f73a; */
+            border: none;
             /* Border to highlight input */
         }
 
@@ -274,13 +275,29 @@
             /* Adjusted drop down arrow position */
             background-size: 12px;
         }
+
+        /* Remove arrows for number input fields */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+
     </style>
 </head>
 
 <body>
 
     <div class="header">
-        <div class="logo">HB</div>
+        <!-- <div class="logo">HB</div> -->
+        <div class="logo">
+            <img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">
+        </div>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
     </div>
 
