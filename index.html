@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGPA Calculator</title>
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             display: flex;
@@ -14,63 +16,151 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #0a1a2b; /* Dark Navy Blue */
-            color: #c7f73a; /* Lime Green */
-            padding: 20px;
+            background-color: #0a1a2b;
+            /* Dark Navy Blue */
+            color: #c7f73a;
+            /* Lime Green */
+            padding: 5px;
             display: flex;
             flex-direction: column;
         }
-* {
+
+        /* * {
     box-sizing: border-box;
-}
+}*/
 
-.container {
-    max-width: 600px; /* Ensure this is consistent */
-    margin: 0 auto;
-    background-color: #12263f;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
-    /* Add a fixed width if needed */
-    width: 100%;
-}
-        h1 {
-            text-align: center;
-            color: #21c6b3; /* Teal */
-        }
-
-        h2 {
-            color: #21c6b3; /* Match color of the main heading */
-            text-align: center; /* Center the title */
-        }
-
-        .course-row, .course-edit {
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #12263f;
+            /* Dark Navy Blue */
+            color: #c7f73a;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            padding: 10px 20px;
+            z-index: 1000;
+            /* Ensure it stays on top */
+        }
+
+        .header .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .header .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: #c7f73a;
+            width: 40px;
+            /* Reduced width */
+            height: 40px;
+            /* Fixed height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu {
+            position: fixed;
+            top: 65px;
+            /* Adjusted to appear below the header and ensure button visibility */
+            right: 0;
+            width: 170px;
+            /* Slightly reduced width */
+            background-color: #12263f;
+            /* Same as header */
+            color: #c7f73a;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            /* Reduced padding */
+            z-index: 1000;
+            //box-shadow: -2px 0 10px rgba(0, 0, 0, 0.7); /* Shadow to create a separation effect */
+            border-radius: 4px;
+            /* Rounded corners */
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #c7f73a;
+            padding: 15px;
+            /* Reduced gap between menu items */
+            font-size: 16px;
+            /* Adjusted font size */
+        }
+
+        .menu.active {
+            display: flex;
+            right: 0;
+            /* Align to right edge */
+        }
+
+        .container {
+            max-width: 100%;
+            /* Ensure this is consistent 600px */
+            margin: 85px auto 20px;
+            background-color: #12263f;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            /* Add a fixed width if needed */
+            width: 350px;
+            /* 100% */
+            box-sizing: border-box;
+        }
+
+
+        h1 {
+            text-align: center;
+            color: #21c6b3;
+            /* Teal */
+        }
+
+        h2 {
+            color: #21c6b3;
+            /* Match color of the main heading */
+            text-align: center;
+            /* Center the title */
+        }
+
+        .course-row,
+        .course-edit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
             padding-left: 15px;
             padding-right: 15px;
         }
 
-        .course-row label, .course-edit input {
+        .course-row label,
+        .course-edit input {
             margin-right: 10px;
             flex: 1;
             text-align: left;
         }
 
         select {
-            width: 60%; /* 60% of the container width */
+            width: 60%;
+            /* 60% of the container width */
             padding: 10px;
             background-color: #0a1a2b;
             color: #c7f73a;
-            border: none; /* No border */
+            border: none;
+            /* No border */
             border-radius: 4px;
-            font-size: 16px;
-            appearance: none; /* Remove default styling for dropdown */
+            font-size: 14px;
+            appearance: none;
+            /* Remove default styling for dropdown */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='%23c7f73a' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: calc(100% - 15px) center; /* Adjust arrow position */
+            background-position: calc(100% - 15px) center;
+            /* Adjust arrow position */
             background-size: 12px;
         }
 
@@ -99,8 +189,10 @@
         }
 
         footer {
-            background-color: transparent; /* No background color */
-            color: lightblue; /* Light blue text color */
+            background-color: transparent;
+            /* No background color */
+            color: lightblue;
+            /* Light blue text color */
             text-align: center;
             padding: 20px;
             font-size: 10px;
@@ -122,9 +214,12 @@
             background-color: yellow;
             margin-right: 10px;
             border: none;
-            border-radius: 4px; /* Smooth curve */
-            width: 24px; /* Reduced size */
-            height: 24px; /* Reduced size */
+            border-radius: 4px;
+            /* Smooth curve */
+            width: 24px;
+            /* Reduced size */
+            height: 24px;
+            /* Reduced size */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -133,7 +228,8 @@
         .delete-btn {
             background-color: red;
             border: none;
-            border-radius: 8px; /* Smooth curved square */
+            border-radius: 8px;
+            /* Smooth curved square */
             padding: 5px;
             cursor: pointer;
             display: flex;
@@ -148,34 +244,50 @@
             height: 18px;
         }
 
-        .course-edit input[type="text"], .course-edit input[type="number"] {
+        .course-edit input[type="text"],
+        .course-edit input[type="number"] {
             padding: 8px;
             border-radius: 4px;
             background-color: #0a1a2b;
             color: #c7f73a;
             margin-right: 10px;
             flex: 1;
-            max-width: 130px; /* Adjusted width */
-            border: 1px solid #c7f73a; /* Border to highlight input */
+            max-width: 130px;
+            /* Adjusted width */
+            border: 1px solid #c7f73a;
+            /* Border to highlight input */
         }
 
         select {
-            width: 60%; /* Adjusted width of the grade dropdown */
-            padding: 10px;
+            width: 60%;
+            /* Adjusted width of the grade dropdown */
+            padding: 8px;
             background-color: #0a1a2b;
             color: #c7f73a;
             border: none;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='%23c7f73a' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: calc(100% - 10px) center; /* Adjusted drop down arrow position */
+            background-position: calc(100% - 10px) center;
+            /* Adjusted drop down arrow position */
             background-size: 12px;
         }
     </style>
 </head>
+
 <body>
+
+    <div class="header">
+        <div class="logo">HB</div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <div class="menu" id="menu">
+        <a href="index.html">SGPA Calculator</a>
+        <a href="page1.html">CGPA Calculator</a>
+    </div>
 
     <div class="container">
         <h1>SGPA Calculator</h1>
@@ -201,7 +313,7 @@
         </div>
     </div>
 
-  <!-- Footer -->
+    <!-- Footer -->
     <footer>
         Made by Hrudayesh Bhaskara
     </footer>
@@ -341,6 +453,11 @@
             toggleEdit(); // Close the edit section after saving
         }
 
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+
         function loadSavedData() {
             const savedCourses = JSON.parse(localStorage.getItem('courses'));
             const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
@@ -351,10 +468,11 @@
             }
         }
 
-        window.onload = function() {
+        window.onload = function () {
             loadSavedData();
             renderCourses();
         };
     </script>
 </body>
+
 </html>
