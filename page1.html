@@ -160,6 +160,11 @@
             border: none;
         }
 
+        .save-btn {
+            background-color: #ffca3a;
+            color: #0a1a2b;
+        }
+
         button {
             width: 100%;
             padding: 10px;
@@ -241,7 +246,7 @@
                 <!-- Semesters will be dynamically added here -->
             </div>
             <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
-            <button type="button" onclick="saveChanges()">Save Changes</button>
+            <button type="button" class="save-btn" onclick="saveChanges()">Save Changes</button>
             <div class="result" id="cgpaOutput"></div> <!-- Output display -->
         </form>
     </div>
