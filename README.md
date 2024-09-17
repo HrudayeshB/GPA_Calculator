@@ -18,7 +18,7 @@ In many colleges, the SGPA / CGPA is not directly provided, and students are req
 - Fully responsive design, optimized for both desktop and mobile browsers.
 
 ## How to Use
-1. Open the [website](.https://hrudayeshb.github.io/SGPA_Calculator/)
+1. Open the [website](./https://hrudayeshb.github.io/SGPA_Calculator/)
 2. Enter your course names and credits, or edit existing ones.
 3. Input your grades for each course.
 4. Click **Calculate SGPA** to get your result.
