@@ -289,19 +289,24 @@ function renderSemesters() {
 }
 
         function calculateCGPA() {
-            let totalCredits = 0;
-            let weightedSGPA = 0;
+    let totalCredits = 0;
+    let weightedSGPA = 0;
 
-            for (let i = 1; i <= 8; i++) {
-                const sgpa = parseFloat(document.getElementById(`sgpa-${i}`).value) || 0;
-                const credits = parseFloat(document.getElementById(`credits-${i}`).value) || 0;
-                weightedSGPA += sgpa * credits;
-                totalCredits += credits;
-            }
-
-            const cgpa = totalCredits > 0 ? weightedSGPA / totalCredits : 0;
-            document.getElementById('cgpaOutput').innerText = `CGPA: ${cgpa.toFixed(2)}`;
+    for (let i = 1; i <= 8; i++) {
+        const sgpaInput = document.getElementById(`sgpa-${i}`).value;
+        const credits = parseFloat(document.getElementById(`credits-${i}`).value) || 0;
+        
+        // Check if SGPA is filled and valid
+        if (sgpaInput) {
+            const sgpa = parseFloat(sgpaInput) || 0;
+            weightedSGPA += sgpa * credits;
+            totalCredits += credits;
         }
+    }
+
+    const cgpa = totalCredits > 0 ? weightedSGPA / totalCredits : 0;
+    document.getElementById('cgpaOutput').innerText = `CGPA: ${cgpa.toFixed(2)}`;
+}
 
         function saveChanges() {
             const savedData = [];
