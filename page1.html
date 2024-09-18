@@ -106,7 +106,7 @@
             margin: 85px auto 20px;
             /* Adjust margin to avoid overlap with header */
             background-color: #12263f;
-            padding: 20px;
+            padding: 25px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
             border-radius: 8px;
             box-sizing: border-box;
@@ -158,6 +158,11 @@
             width: 100px;
             /* Same length for Total Credits */
             border: none;
+        }
+
+        .save-btn {
+            background-color: #ffca3a;
+            color: #0a1a2b;
         }
 
         button {
@@ -241,7 +246,7 @@
                 <!-- Semesters will be dynamically added here -->
             </div>
             <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
-            <button type="button" onclick="saveChanges()">Save Changes</button>
+            <button type="button" class="save-btn" onclick="saveChanges()">Save Changes</button>
             <div class="result" id="cgpaOutput"></div> <!-- Output display -->
         </form>
     </div>
