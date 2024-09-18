@@ -199,14 +199,17 @@
         }
 
         footer a {
-            margin-left: 2px; /* Space between text and the icon */
-            font-size: 12px; /* Size of the GitHub icon */
+            margin-left: 2px;
+            /* Space between text and the icon */
+            font-size: 12px;
+            /* Size of the GitHub icon */
             color: lightblue;
-         }
+        }
 
         footer a:hover {
-            color: #21c6b3; /* Change icon color on hover */
-         }
+            color: #21c6b3;
+            /* Change icon color on hover */
+        }
 
         .edit-container {
             display: none;
@@ -297,7 +300,6 @@
             -moz-appearance: textfield;
             /* Firefox */
         }
-
     </style>
 </head>
 
@@ -342,10 +344,11 @@
 
     <!-- Footer -->
     <footer>
-    Made by Hrudayesh Bhaskara
-    <a href="https://github.com/HrudayeshB/GPA_Calculator" target="_blank" style="color: lightblue; text-decoration: none;">
-        <i class="fab fa-github"></i>
-    </a>
+        Made by Hrudayesh Bhaskara
+        <a href="https://github.com/HrudayeshB/GPA_Calculator" target="_blank"
+            style="color: lightblue; text-decoration: none;">
+            <i class="fab fa-github"></i>
+        </a>
     </footer>
 
     <script>
@@ -372,26 +375,30 @@
         };
 
         let courses = Object.keys(courseCreds);
+        let tempCourses = [...courses];
+        let tempCourseCreds = { ...courseCreds };
+        let tempEditableCourses = [...courses];
+        let tempEditableCourseCreds = { ...courseCreds };
 
         function renderCourses() {
             const courseList = document.getElementById('courseList');
             courseList.innerHTML = '';
-            courses.forEach((course) => {
+            tempCourses.forEach((course) => {
                 const courseDiv = document.createElement('div');
                 courseDiv.classList.add('course-row');
                 courseDiv.innerHTML = `
-                    <label for="${course}">${course}</label>
-                    <select id="${course}">
-                        <option value="O">O</option>
-                        <option value="A+">A+</option>
-                        <option value="A">A</option>
-                        <option value="B+">B+</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="P">P</option>
-                        <option value="F">F</option>
-                    </select>
-                `;
+            <label for="${course}">${course}</label>
+            <select id="${course}">
+                <option value="O">O</option>
+                <option value="A+">A+</option>
+                <option value="A">A</option>
+                <option value="B+">B+</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="P">P</option>
+                <option value="F">F</option>
+            </select>
+        `;
                 courseList.appendChild(courseDiv);
             });
         }
@@ -399,27 +406,27 @@
         function renderEditableCourses() {
             const editCourseList = document.getElementById('editCourseList');
             editCourseList.innerHTML = '';
-            courses.forEach((course, index) => {
+            tempEditableCourses.forEach((course, index) => {
                 const editDiv = document.createElement('div');
                 editDiv.classList.add('course-edit');
                 editDiv.innerHTML = `
-                    <button type="button" class="arrow-btn" onclick="moveUp(${index})">⬆</button>
-                    <input type="text" id="editName-${course}" value="${course}">
-                    <input type="number" id="editCredits-${course}" value="${courseCreds[course]}" min="1" max="10">
-                    <button type="button" class="delete-btn" onclick="removeCourse(${index})">
-                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/trash.png" alt="Delete">
-                    </button>
-                `;
+            <button type="button" class="arrow-btn" onclick="moveUp(${index})">⬆</button>
+            <input type="text" id="editName-${index}" value="${course}" onchange="updateEditableCourse(${index})">
+            <input type="number" id="editCredits-${index}" value="${tempEditableCourseCreds[course]}" min="1" max="10" onchange="updateEditableCourse(${index})">
+            <button type="button" class="delete-btn" onclick="removeEditableCourse(${index})">
+                <img src="https://img.icons8.com/ios-glyphs/30/ffffff/trash.png" alt="Delete">
+            </button>
+        `;
                 editCourseList.appendChild(editDiv);
             });
         }
 
         function calculateGPA() {
             let studentCreds = 0;
-            const totalCreds = Object.values(courseCreds).reduce((a, b) => a + b, 0);
-            courses.forEach((course) => {
+            const totalCreds = Object.values(tempCourseCreds).reduce((a, b) => a + b, 0);
+            tempCourses.forEach((course) => {
                 const selectedGrade = document.getElementById(course).value;
-                studentCreds += grade[selectedGrade] * courseCreds[course];
+                studentCreds += grade[selectedGrade] * tempCourseCreds[course];
             });
 
             const gpa = studentCreds / totalCreds;
@@ -440,47 +447,68 @@
             const newCourse = prompt("Enter new course name:");
             const newCredits = prompt("Enter credits for the new course:");
             if (newCourse && newCredits) {
-                courses.push(newCourse);
-                courseCreds[newCourse] = parseInt(newCredits);
-                renderCourses();
+                tempEditableCourses.push(newCourse);
+                tempEditableCourseCreds[newCourse] = parseInt(newCredits);
                 renderEditableCourses();
             }
         }
 
-        function updateCourse(index) {
-            const newName = document.getElementById(`editName-${courses[index]}`).value;
-            const newCredits = parseInt(document.getElementById(`editCredits-${courses[index]}`).value);
+        function updateEditableCourse(index) {
+            const newName = document.getElementById(`editName-${index}`).value;
+            const newCredits = parseInt(document.getElementById(`editCredits-${index}`).value);
             if (newName && !isNaN(newCredits)) {
-                delete courseCreds[courses[index]];
-                courseCreds[newName] = newCredits;
-                courses[index] = newName;
-                renderCourses();
-                renderEditableCourses();
+                tempEditableCourses[index] = newName;
+                tempEditableCourseCreds[newName] = newCredits;
+                if (tempEditableCourses[index] !== newName) {
+                    delete tempEditableCourseCreds[tempEditableCourses[index]];
+                }
             }
         }
 
-        function removeCourse(index) {
-            const course = courses[index];
-            delete courseCreds[course];
-            courses.splice(index, 1);
-            renderCourses();
+        function removeEditableCourse(index) {
+            delete tempEditableCourseCreds[tempEditableCourses[index]];
+            tempEditableCourses.splice(index, 1);
             renderEditableCourses();
         }
 
         function moveUp(index) {
             if (index > 0) {
-                [courses[index], courses[index - 1]] = [courses[index - 1], courses[index]];
-                renderCourses();
+                [tempEditableCourses[index], tempEditableCourses[index - 1]] = [tempEditableCourses[index - 1], tempEditableCourses[index]];
                 renderEditableCourses();
             }
         }
 
         function saveChanges() {
+            // Update the courses and courseCreds objects from the temporary fields
+            courses = [...tempEditableCourses];
+            courseCreds = { ...tempEditableCourseCreds };
+
+            // Save updated data to localStorage
             localStorage.setItem('courses', JSON.stringify(courses));
             localStorage.setItem('courseCreds', JSON.stringify(courseCreds));
+
+            // Update temporary data
+            tempCourses = [...courses];
+            tempCourseCreds = { ...courseCreds };
+
+            // Re-render courses and editable courses
             renderCourses();
             renderEditableCourses();
             toggleEdit(); // Close the edit section after saving
+        }
+
+        function loadSavedData() {
+            const savedCourses = JSON.parse(localStorage.getItem('courses'));
+            const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
+
+            if (savedCourses && savedCourseCreds) {
+                courses = savedCourses;
+                courseCreds = savedCourseCreds;
+                tempCourses = [...courses];
+                tempCourseCreds = { ...courseCreds };
+                tempEditableCourses = [...courses];
+                tempEditableCourseCreds = { ...courseCreds };
+            }
         }
 
         function toggleMenu() {
@@ -488,20 +516,11 @@
             menu.classList.toggle('active');
         }
 
-        function loadSavedData() {
-            const savedCourses = JSON.parse(localStorage.getItem('courses'));
-            const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
-
-            if (savedCourses) {
-                courses = savedCourses;
-                courseCreds = savedCourseCreds;
-            }
-        }
-
         window.onload = function () {
             loadSavedData();
             renderCourses();
         };
+
     </script>
 </body>
 
