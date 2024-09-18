@@ -406,14 +406,14 @@ function renderCourses() {
 function renderEditableCourses() {
     const editCourseList = document.getElementById('editCourseList');
     editCourseList.innerHTML = '';
-    tempEditableCourses.forEach((course, index) => {
+    courses.forEach((course, index) => {
         const editDiv = document.createElement('div');
         editDiv.classList.add('course-edit');
         editDiv.innerHTML = `
             <button type="button" class="arrow-btn" onclick="moveUp(${index})">⬆</button>
-            <input type="text" id="editName-${index}" value="${course}" onchange="updateEditableCourse(${index})">
-            <input type="number" id="editCredits-${index}" value="${tempEditableCourseCreds[course]}" min="1" max="10" onchange="updateEditableCourse(${index})">
-            <button type="button" class="delete-btn" onclick="removeEditableCourse(${index})">
+            <input type="text" id="editName-${index}" value="${course || ''}" placeholder="Course Name">
+            <input type="number" id="editCredits-${index}" value="${courseCreds[course] || 1}" min="1" max="10">
+            <button type="button" class="delete-btn" onclick="removeCourse(${index})">
                 <img src="https://img.icons8.com/ios-glyphs/30/ffffff/trash.png" alt="Delete">
             </button>
         `;
@@ -452,13 +452,16 @@ function toggleEdit() {
 }
 
 function addCourse() {
-    const newCourse = prompt("Enter new course name:");
-    const newCredits = prompt("Enter credits for the new course:");
-    if (newCourse && newCredits) {
-        tempEditableCourses.push(newCourse);
-        tempEditableCourseCreds[newCourse] = parseInt(newCredits);
-        renderEditableCourses();
-    }
+    // Push empty values to the courses and courseCreds
+    const newCourseIndex = courses.length;
+    courses.push('');  // Placeholder for a new course name
+    courseCreds[''] = 1;  // Default credit value for the new course
+
+    // Re-render the editable courses with an empty text field for the new course
+    renderEditableCourses();
+
+    // Focus on the newly added empty course name input
+    document.getElementById(`editName-`).focus();
 }
 
 function updateEditableCourse(index) {
