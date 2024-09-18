@@ -411,7 +411,7 @@ function renderEditableCourses() {
         editDiv.innerHTML = `
             <button type="button" class="arrow-btn" onclick="moveUp(${index})">⬆</button>
             <input type="text" id="editName-${index}" value="${course}" placeholder="Course Name" onchange="updateEditableCourse(${index})">
-            <input type="number" id="editCredits-${index}" value="${tempEditableCourseCreds[course]}" min="1" max="10" placeholder="Credits" onchange="updateEditableCourse(${index})">
+            <input type="number" id="editCredits-${index}" value="${tempEditableCourseCreds[course] || ''}" min="1" max="10" onchange="updateEditableCourse(${index})">
             <button type="button" class="delete-btn" onclick="removeEditableCourse(${index})">
                 <img src="https://img.icons8.com/ios-glyphs/30/ffffff/trash.png" alt="Delete">
             </button>
@@ -443,19 +443,17 @@ function toggleEdit() {
 }
 
 function addCourse() {
-    const newCourse = ""; // Start with empty value
-    const newCredits = ""; // Start with empty value
-    tempEditableCourses.push(newCourse);
-    tempEditableCourseCreds[newCourse] = parseInt(newCredits) || 0;
+    tempEditableCourses.push("");
+    tempEditableCourseCreds[""] = 0;  // Initialize with empty name and zero credits
     renderEditableCourses();
 }
 
 function updateEditableCourse(index) {
-    const newName = document.getElementById(`editName-${index}`).value;
-    const newCredits = parseInt(document.getElementById(`editCredits-${index}`).value);
+    const newName = document.getElementById(`editName-${index}`).value.trim();
+    const newCredits = parseInt(document.getElementById(`editCredits-${index}`).value) || 0;
     if (newName) {
         tempEditableCourses[index] = newName;
-        tempEditableCourseCreds[newName] = isNaN(newCredits) ? 0 : newCredits;
+        tempEditableCourseCreds[newName] = newCredits;
     }
 }
 
@@ -469,6 +467,8 @@ function removeEditableCourse(index) {
 function moveUp(index) {
     if (index > 0) {
         [tempEditableCourses[index], tempEditableCourses[index - 1]] = [tempEditableCourses[index - 1], tempEditableCourses[index]];
+        [tempEditableCourseCreds[tempEditableCourses[index]], tempEditableCourseCreds[tempEditableCourses[index - 1]]] =
+            [tempEditableCourseCreds[tempEditableCourses[index - 1]], tempEditableCourseCreds[tempEditableCourses[index]]];
         renderEditableCourses();
     }
 }
