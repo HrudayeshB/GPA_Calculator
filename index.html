@@ -452,16 +452,9 @@ function toggleEdit() {
 }
 
 function addCourse() {
-    // Push empty values to the courses and courseCreds
-    const newCourseIndex = courses.length;
-    courses.push('');  // Placeholder for a new course name
-    courseCreds[''] = 1;  // Default credit value for the new course
-
-    // Re-render the editable courses with an empty text field for the new course
-    renderEditableCourses();
-
-    // Focus on the newly added empty course name input
-    document.getElementById(`editName-`).focus();
+    courses.push('');  // Add an empty string as a placeholder course
+    courseCreds[''] = 1;  // Add a default value for credits
+    renderEditableCourses();  // Re-render the editable courses
 }
 
 function updateEditableCourse(index) {
