@@ -429,14 +429,10 @@ function calculateGPA() {
         const selectedGrade = document.getElementById(course).value;
         const courseCredits = tempCourseCreds[course];
         
-        // Add the weighted score (grade * credits)
         studentCreds += grade[selectedGrade] * courseCredits;
-        
-        // Add the course credits to the total credits
         totalCreds += courseCredits;
     });
 
-    // Calculate the GPA
     const gpa = studentCreds / totalCreds;
     document.getElementById('result').innerText = `GPA: ${gpa.toFixed(2)}`;
 }
@@ -452,13 +448,11 @@ function toggleEdit() {
 }
 
 function addCourse() {
-    const newCourse = prompt("Enter new course name:");
-    const newCredits = prompt("Enter credits for the new course:");
-    if (newCourse && newCredits) {
-        tempEditableCourses.push(newCourse);
-        tempEditableCourseCreds[newCourse] = parseInt(newCredits);
-        renderEditableCourses();
-    }
+    const index = tempEditableCourses.length;
+    tempEditableCourses.push("");
+    tempEditableCourseCreds[""] = 1; // Default to 1 credit
+
+    renderEditableCourses();
 }
 
 function updateEditableCourse(index) {
@@ -487,19 +481,15 @@ function moveUp(index) {
 }
 
 function saveChanges() {
-    // Update the courses and courseCreds objects from the temporary fields
     courses = [...tempEditableCourses];
     courseCreds = { ...tempEditableCourseCreds };
 
-    // Save updated data to localStorage
     localStorage.setItem('courses', JSON.stringify(courses));
     localStorage.setItem('courseCreds', JSON.stringify(courseCreds));
 
-    // Update temporary data
     tempCourses = [...courses];
     tempCourseCreds = { ...courseCreds };
 
-    // Re-render courses and editable courses
     renderCourses();
     renderEditableCourses();
     toggleEdit(); // Close the edit section after saving
