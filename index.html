@@ -411,7 +411,7 @@ function renderEditableCourses() {
         editDiv.classList.add('course-edit');
         editDiv.innerHTML = `
             <button type="button" class="arrow-btn" onclick="moveUp(${index})">⬆</button>
-            <input type="text" id="editName-${index}" value="${course}" onchange="updateEditableCourse(${index})">
+            <input type="text" id="editName-${index}" value="${course}" placeholder="Course Name" onchange="updateEditableCourse(${index})">
             <input type="number" id="editCredits-${index}" value="${tempEditableCourseCreds[course]}" min="1" max="10" onchange="updateEditableCourse(${index})">
             <button type="button" class="delete-btn" onclick="removeEditableCourse(${index})">
                 <img src="https://img.icons8.com/ios-glyphs/30/ffffff/trash.png" alt="Delete">
