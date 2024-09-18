@@ -422,13 +422,18 @@ function renderEditableCourses() {
 
 function calculateGPA() {
     let studentCreds = 0;
-    const totalCreds = Object.values(courseCreds).reduce((a, b) => a + b, 0);
+    let totalCreds = 0; // Total credits should be calculated dynamically
+
     courses.forEach((course) => {
-        const selectedGrade = document.getElementById(course).value;
-        studentCreds += grade[selectedGrade] * courseCreds[course];
+        const selectedGrade = document.getElementById(course)?.value;
+        if (selectedGrade && courseCreds[course]) { // Check for valid grade and credits
+            studentCreds += grade[selectedGrade] * courseCreds[course];
+            totalCreds += courseCreds[course]; // Sum total credits dynamically
+        }
     });
 
-    const gpa = studentCreds / totalCreds;
+    // Calculate GPA only if totalCreds is greater than 0
+    const gpa = totalCreds > 0 ? (studentCreds / totalCreds) : 0;
     document.getElementById('result').innerText = `GPA: ${gpa.toFixed(2)}`;
 }
 
