@@ -353,40 +353,40 @@
 
     <script>
         const grade = {
-            "O": 10,
-            "A+": 9,
-            "A": 8,
-            "B+": 7,
-            "B": 6,
-            "C": 5,
-            "P": 4,
-            "F": 0
-        };
+    "O": 10,
+    "A+": 9,
+    "A": 8,
+    "B+": 7,
+    "B": 6,
+    "C": 5,
+    "P": 4,
+    "F": 0
+};
 
-        let courseCreds = {
-            "CPS": 3,
-            "CST": 3,
-            "FAW": 3,
-            "AIC": 3,
-            "ARM": 4,
-            "PCS": 4,
-            "UHV": 1,
-            "APL": 1
-        };
+let courseCreds = {
+    "CPS": 3,
+    "CST": 3,
+    "FAW": 3,
+    "AIC": 3,
+    "ARM": 4,
+    "PCS": 4,
+    "UHV": 1,
+    "APL": 1
+};
 
-        let courses = Object.keys(courseCreds);
-        let tempCourses = [...courses];
-        let tempCourseCreds = { ...courseCreds };
-        let tempEditableCourses = [...courses];
-        let tempEditableCourseCreds = { ...courseCreds };
+let courses = Object.keys(courseCreds);
+let tempCourses = [...courses];
+let tempCourseCreds = { ...courseCreds };
+let tempEditableCourses = [...courses];
+let tempEditableCourseCreds = { ...courseCreds };
 
-        function renderCourses() {
-            const courseList = document.getElementById('courseList');
-            courseList.innerHTML = '';
-            tempCourses.forEach((course) => {
-                const courseDiv = document.createElement('div');
-                courseDiv.classList.add('course-row');
-                courseDiv.innerHTML = `
+function renderCourses() {
+    const courseList = document.getElementById('courseList');
+    courseList.innerHTML = '';
+    tempCourses.forEach((course) => {
+        const courseDiv = document.createElement('div');
+        courseDiv.classList.add('course-row');
+        courseDiv.innerHTML = `
             <label for="${course}">${course}</label>
             <select id="${course}">
                 <option value="O">O</option>
@@ -399,17 +399,17 @@
                 <option value="F">F</option>
             </select>
         `;
-                courseList.appendChild(courseDiv);
-            });
-        }
+        courseList.appendChild(courseDiv);
+    });
+}
 
-        function renderEditableCourses() {
-            const editCourseList = document.getElementById('editCourseList');
-            editCourseList.innerHTML = '';
-            tempEditableCourses.forEach((course, index) => {
-                const editDiv = document.createElement('div');
-                editDiv.classList.add('course-edit');
-                editDiv.innerHTML = `
+function renderEditableCourses() {
+    const editCourseList = document.getElementById('editCourseList');
+    editCourseList.innerHTML = '';
+    tempEditableCourses.forEach((course, index) => {
+        const editDiv = document.createElement('div');
+        editDiv.classList.add('course-edit');
+        editDiv.innerHTML = `
             <button type="button" class="arrow-btn" onclick="moveUp(${index})">⬆</button>
             <input type="text" id="editName-${index}" value="${course}" onchange="updateEditableCourse(${index})">
             <input type="number" id="editCredits-${index}" value="${tempEditableCourseCreds[course]}" min="1" max="10" onchange="updateEditableCourse(${index})">
@@ -417,109 +417,117 @@
                 <img src="https://img.icons8.com/ios-glyphs/30/ffffff/trash.png" alt="Delete">
             </button>
         `;
-                editCourseList.appendChild(editDiv);
-            });
-        }
+        editCourseList.appendChild(editDiv);
+    });
+}
 
-        function calculateGPA() {
-            let studentCreds = 0;
-            const totalCreds = Object.values(tempCourseCreds).reduce((a, b) => a + b, 0);
-            tempCourses.forEach((course) => {
-                const selectedGrade = document.getElementById(course).value;
-                studentCreds += grade[selectedGrade] * tempCourseCreds[course];
-            });
+function calculateGPA() {
+    let studentCreds = 0;
+    let totalCreds = 0;
+    
+    tempCourses.forEach((course) => {
+        const selectedGrade = document.getElementById(course).value;
+        const courseCredits = tempCourseCreds[course];
+        
+        // Add the weighted score (grade * credits)
+        studentCreds += grade[selectedGrade] * courseCredits;
+        
+        // Add the course credits to the total credits
+        totalCreds += courseCredits;
+    });
 
-            const gpa = studentCreds / totalCreds;
-            document.getElementById('result').innerText = `GPA: ${gpa.toFixed(2)}`;
-        }
+    // Calculate the GPA
+    const gpa = studentCreds / totalCreds;
+    document.getElementById('result').innerText = `GPA: ${gpa.toFixed(2)}`;
+}
 
-        function toggleEdit() {
-            const editContainer = document.getElementById('editContainer');
-            if (editContainer.style.display === 'none' || !editContainer.style.display) {
-                editContainer.style.display = 'block';
-                renderEditableCourses();
-            } else {
-                editContainer.style.display = 'none';
-            }
-        }
+function toggleEdit() {
+    const editContainer = document.getElementById('editContainer');
+    if (editContainer.style.display === 'none' || !editContainer.style.display) {
+        editContainer.style.display = 'block';
+        renderEditableCourses();
+    } else {
+        editContainer.style.display = 'none';
+    }
+}
 
-        function addCourse() {
-            const newCourse = prompt("Enter new course name:");
-            const newCredits = prompt("Enter credits for the new course:");
-            if (newCourse && newCredits) {
-                tempEditableCourses.push(newCourse);
-                tempEditableCourseCreds[newCourse] = parseInt(newCredits);
-                renderEditableCourses();
-            }
-        }
+function addCourse() {
+    const newCourse = prompt("Enter new course name:");
+    const newCredits = prompt("Enter credits for the new course:");
+    if (newCourse && newCredits) {
+        tempEditableCourses.push(newCourse);
+        tempEditableCourseCreds[newCourse] = parseInt(newCredits);
+        renderEditableCourses();
+    }
+}
 
-        function updateEditableCourse(index) {
-            const newName = document.getElementById(`editName-${index}`).value;
-            const newCredits = parseInt(document.getElementById(`editCredits-${index}`).value);
-            if (newName && !isNaN(newCredits)) {
-                tempEditableCourses[index] = newName;
-                tempEditableCourseCreds[newName] = newCredits;
-                if (tempEditableCourses[index] !== newName) {
-                    delete tempEditableCourseCreds[tempEditableCourses[index]];
-                }
-            }
-        }
-
-        function removeEditableCourse(index) {
+function updateEditableCourse(index) {
+    const newName = document.getElementById(`editName-${index}`).value;
+    const newCredits = parseInt(document.getElementById(`editCredits-${index}`).value);
+    if (newName && !isNaN(newCredits)) {
+        tempEditableCourses[index] = newName;
+        tempEditableCourseCreds[newName] = newCredits;
+        if (tempEditableCourses[index] !== newName) {
             delete tempEditableCourseCreds[tempEditableCourses[index]];
-            tempEditableCourses.splice(index, 1);
-            renderEditableCourses();
         }
+    }
+}
 
-        function moveUp(index) {
-            if (index > 0) {
-                [tempEditableCourses[index], tempEditableCourses[index - 1]] = [tempEditableCourses[index - 1], tempEditableCourses[index]];
-                renderEditableCourses();
-            }
-        }
+function removeEditableCourse(index) {
+    delete tempEditableCourseCreds[tempEditableCourses[index]];
+    tempEditableCourses.splice(index, 1);
+    renderEditableCourses();
+}
 
-        function saveChanges() {
-            // Update the courses and courseCreds objects from the temporary fields
-            courses = [...tempEditableCourses];
-            courseCreds = { ...tempEditableCourseCreds };
+function moveUp(index) {
+    if (index > 0) {
+        [tempEditableCourses[index], tempEditableCourses[index - 1]] = [tempEditableCourses[index - 1], tempEditableCourses[index]];
+        renderEditableCourses();
+    }
+}
 
-            // Save updated data to localStorage
-            localStorage.setItem('courses', JSON.stringify(courses));
-            localStorage.setItem('courseCreds', JSON.stringify(courseCreds));
+function saveChanges() {
+    // Update the courses and courseCreds objects from the temporary fields
+    courses = [...tempEditableCourses];
+    courseCreds = { ...tempEditableCourseCreds };
 
-            // Update temporary data
-            tempCourses = [...courses];
-            tempCourseCreds = { ...courseCreds };
+    // Save updated data to localStorage
+    localStorage.setItem('courses', JSON.stringify(courses));
+    localStorage.setItem('courseCreds', JSON.stringify(courseCreds));
 
-            // Re-render courses and editable courses
-            renderCourses();
-            renderEditableCourses();
-            toggleEdit(); // Close the edit section after saving
-        }
+    // Update temporary data
+    tempCourses = [...courses];
+    tempCourseCreds = { ...courseCreds };
 
-        function loadSavedData() {
-            const savedCourses = JSON.parse(localStorage.getItem('courses'));
-            const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
+    // Re-render courses and editable courses
+    renderCourses();
+    renderEditableCourses();
+    toggleEdit(); // Close the edit section after saving
+}
 
-            if (savedCourses && savedCourseCreds) {
-                courses = savedCourses;
-                courseCreds = savedCourseCreds;
-                tempCourses = [...courses];
-                tempCourseCreds = { ...courseCreds };
-                tempEditableCourses = [...courses];
-                tempEditableCourseCreds = { ...courseCreds };
-            }
-        }
+function loadSavedData() {
+    const savedCourses = JSON.parse(localStorage.getItem('courses'));
+    const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
 
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('active');
-        }
+    if (savedCourses && savedCourseCreds) {
+        courses = savedCourses;
+        courseCreds = savedCourseCreds;
+        tempCourses = [...courses];
+        tempCourseCreds = { ...courseCreds };
+        tempEditableCourses = [...courses];
+        tempEditableCourseCreds = { ...courseCreds };
+    }
+}
 
-        window.onload = function () {
-            loadSavedData();
-            renderCourses();
-        };
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('active');
+}
+
+window.onload = function () {
+    loadSavedData();
+    renderCourses();
+};
 
     </script>
 </body>
