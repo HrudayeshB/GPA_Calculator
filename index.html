@@ -352,6 +352,7 @@
     </footer>
 
     <script>
+        
         const grade = {
     "O": 10,
     "A+": 9,
@@ -363,18 +364,32 @@
     "F": 0
 };
 
-let courseCreds = {
-    "FOV": 3,
-    "MTA": 4,
-    "DSP": 3,
-    "DCT": 4,
+const CURRENT_VERSION = "1.1"; // Increment this when releasing new updates
+
+const defaultCredits = {
+    "FOV": 3, 
+    "MTA": 4, 
+    "DSP": 3, 
+    "DCT": 4, 
     "Elective": 3,
-    "Mini-Project": 2,
-    "PMF": 2,
+    "Mini-Project": 2, 
+    "PMF": 2, 
     "EVS": 1
 };
 
-let courses = Object.keys(courseCreds);
+
+// let courseCreds = {
+//     "FOV": 3,
+//     "MTA": 4,
+//     "DSP": 3,
+//     "DCT": 4,
+//     "Elective": 3,
+//     "Mini-Project": 2,
+//     "PMF": 2,
+//     "EVS": 1
+// };
+
+let courses = Object.keys(defaultCredits);
 
 let tempEditableCourses = [...courses];  // Temporary list for editing
 let tempEditableCourseCreds = { ...courseCreds }; // Temporary credits for editing
@@ -503,18 +518,43 @@ function saveChanges() {
     toggleEdit(); // Close the edit section after saving
 }
 
+// function loadSavedData() {
+//     const savedCourses = JSON.parse(localStorage.getItem('courses'));
+//     const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
+
+//     if (savedCourses && savedCourseCreds) {
+//         courses = savedCourses;
+//         courseCreds = savedCourseCreds;
+//     }
+//     // Initialize temporary lists with saved data
+//     tempEditableCourses = [...courses];
+//     tempEditableCourseCreds = { ...courseCreds };
+// }
+
 function loadSavedData() {
+    const savedVersion = localStorage.getItem('courses_version');
     const savedCourses = JSON.parse(localStorage.getItem('courses'));
     const savedCourseCreds = JSON.parse(localStorage.getItem('courseCreds'));
 
-    if (savedCourses && savedCourseCreds) {
-        courses = savedCourses;
-        courseCreds = savedCourseCreds;
+    if (savedVersion !== CURRENT_VERSION) {
+        // Only update courses if the version is outdated
+        localStorage.setItem('courses', JSON.stringify(defaultCourses));
+        localStorage.setItem('courseCreds', JSON.stringify(defaultCredits));
+        localStorage.setItem('courses_version', CURRENT_VERSION);
+        
+        courses = defaultCourses;
+        courseCreds = defaultCredits;
+    } else {
+        // Load user's saved courses if the version is up-to-date
+        courses = savedCourses || defaultCourses;
+        courseCreds = savedCourseCreds || defaultCredits;
     }
-    // Initialize temporary lists with saved data
+
+    // Initialize temporary lists with saved or default data
     tempEditableCourses = [...courses];
     tempEditableCourseCreds = { ...courseCreds };
 }
+
 
 function toggleMenu() {
     const menu = document.getElementById('menu');
