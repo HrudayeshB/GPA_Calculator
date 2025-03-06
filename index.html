@@ -380,18 +380,18 @@ const defaultCredits = {
 };
 
 
-// let courseCreds = {
-//     "FOV": 3,
-//     "MTA": 4,
-//     "DSP": 3,
-//     "DCT": 4,
-//     "Elective": 3,
-//     "Mini-Project": 2,
-//     "PMF": 2,
-//     "EVS": 1
-// };
+let courseCreds = {
+    "FOV": 3,
+    "MTA": 4,
+    "DSP": 3,
+    "DCT": 4,
+    "Elective": 3,
+    "Mini-Project": 2,
+    "PMF": 2,
+    "EVS": 1
+};
 
-let courses = Object.keys(defaultCredits);
+let courses = Object.keys(courseCreds);
 
 let tempEditableCourses = [...courses];  // Temporary list for editing
 let tempEditableCourseCreds = { ...courseCreds }; // Temporary credits for editing
