@@ -497,19 +497,18 @@ function removeEditableCourse(index) {
 
 function moveUp(index) {
     if (index > 0) {
-        // Swap course names first
-        [tempEditableCourses[index], tempEditableCourses[index - 1]] = 
-        [tempEditableCourses[index - 1], tempEditableCourses[index]];
+        // Swap course names
+        [tempEditableCourses[index], tempEditableCourses[index - 1]] =
+            [tempEditableCourses[index - 1], tempEditableCourses[index]];
 
-        // Swap credits correctly based on original indexes
-        let tempCredits = tempEditableCourseCreds[tempEditableCourses[index - 1]];
-        tempEditableCourseCreds[tempEditableCourses[index - 1]] = tempEditableCourseCreds[tempEditableCourses[index]];
-        tempEditableCourseCreds[tempEditableCourses[index]] = tempCredits;
+        // Swap course credits
+        [tempEditableCourseCreds[index], tempEditableCourseCreds[index - 1]] =
+            [tempEditableCourseCreds[index - 1], tempEditableCourseCreds[index]];
 
-        // Re-render the editable course list
         renderEditableCourses();
     }
 }
+
 
 function saveChanges() {
     // Update the courses and courseCreds objects from the temporary lists
