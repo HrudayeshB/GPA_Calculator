@@ -486,14 +486,31 @@ function removeEditableCourse(index) {
     renderEditableCourses();
 }
 
+// function moveUp(index) {
+//     if (index > 0) {
+//         [tempEditableCourses[index], tempEditableCourses[index - 1]] = [tempEditableCourses[index - 1], tempEditableCourses[index]];
+//         [tempEditableCourseCreds[tempEditableCourses[index]], tempEditableCourseCreds[tempEditableCourses[index - 1]]] =
+//             [tempEditableCourseCreds[tempEditableCourses[index - 1]], tempEditableCourseCreds[tempEditableCourses[index]]];
+//         renderEditableCourses();
+//     }
+// }
+
 function moveUp(index) {
     if (index > 0) {
-        [tempEditableCourses[index], tempEditableCourses[index - 1]] = [tempEditableCourses[index - 1], tempEditableCourses[index]];
-        [tempEditableCourseCreds[tempEditableCourses[index]], tempEditableCourseCreds[tempEditableCourses[index - 1]]] =
-            [tempEditableCourseCreds[tempEditableCourses[index - 1]], tempEditableCourseCreds[tempEditableCourses[index]]];
+        // Swap course names
+        [tempEditableCourses[index], tempEditableCourses[index - 1]] = 
+        [tempEditableCourses[index - 1], tempEditableCourses[index]];
+
+        // Swap course credits using a temporary variable
+        let tempCredits = tempEditableCourseCreds[tempEditableCourses[index]];
+        tempEditableCourseCreds[tempEditableCourses[index]] = tempEditableCourseCreds[tempEditableCourses[index - 1]];
+        tempEditableCourseCreds[tempEditableCourses[index - 1]] = tempCredits;
+
+        // Re-render courses
         renderEditableCourses();
     }
 }
+
 
 function saveChanges() {
     // Update the courses and courseCreds objects from the temporary lists
