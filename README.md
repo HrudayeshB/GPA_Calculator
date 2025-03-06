@@ -28,6 +28,7 @@ In many colleges, the SGPA / CGPA is not directly provided, and students are req
 9. click on the **Calculate CGPA** button to get your result.
 10. You can save your data by clicking on the **Save Changes** button.
 
+
 ## Contribution
 Made by Hrudayesh Bhaskara. Feel free to fork this project, submit issues, or make pull requests to improve the SGPA Calculator. Contributions are welcome!
 
