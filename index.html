@@ -451,7 +451,7 @@ function calculateGPA() {
 
     // Calculate GPA only if totalCreds is greater than 0
     const gpa = totalCreds > 0 ? (studentCreds / totalCreds) : 0;
-    document.getElementById('result').innerText = `GPA: ${gpa.toFixed(2)}`;
+    document.getElementById('result').innerText = `GPA: ${gpa.toFixed(3)}`;
 }
 
 function toggleEdit() {
