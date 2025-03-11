@@ -305,7 +305,7 @@ function renderSemesters() {
     }
 
     const cgpa = totalCredits > 0 ? weightedSGPA / totalCredits : 0;
-    document.getElementById('cgpaOutput').innerText = `CGPA: ${cgpa.toFixed(2)}`;
+    document.getElementById('cgpaOutput').innerText = `CGPA: ${cgpa.toFixed(3)}`;
 }
 
         function saveChanges() {
