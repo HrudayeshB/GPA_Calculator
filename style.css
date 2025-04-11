@@ -1,0 +1,485 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #0a1a2b;
+    color: #c7f73a;
+    padding: 5px;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #12263f;
+    color: #c7f73a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000;
+}
+
+.header .logo {
+    font-weight: bold;
+    font-size: 24px;
+    display: flex;
+}
+
+.header .menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #c7f73a;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    transition: color 0.2s ease;
+}
+
+.menu {
+    position: fixed;
+    top: 65px;
+    right: 0;
+    width: 170px;
+    background-color: #12263f;
+    color: #c7f73a;
+    display: none;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+.menu.active {
+    display: flex;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #c7f73a;
+    padding: 15px;
+    font-size: 16px;
+    transition: color 0.2s ease;
+}
+
+.menu a:hover {
+    color: #ffca3a;
+}
+
+.container {
+    max-width: 100%;
+    margin: 85px auto 20px;
+    background-color: #12263f;
+    padding: 20px;
+    width: 350px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+h1,
+h2 {
+    text-align: center;
+    color: #21c6b3;
+    font-weight: bold;
+}
+
+.course-row,
+.course-edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0 15px;
+}
+
+.course-row label,
+.course-edit input {
+    margin-right: 10px;
+    flex: 1;
+    text-align: left;
+}
+
+select {
+    width: 50%;
+    padding: 8px 10px;
+    background-color: #0a1a2b;
+    color: #c7f73a;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='%23c7f73a' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    background-size: 12px;
+    transition: background-color 0.2s ease;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #21c6b3;
+    color: #0a1a2b;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #1daaa1;
+}
+
+.edit-btn {
+    background-color: #ffca3a;
+    color: #0a1a2b;
+    transition: background-color 0.2s ease;
+}
+
+.arrow-btn {
+    cursor: pointer;
+    color: black;
+    background-color: limegreen;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.delete-btn {
+    background-color: rgb(179, 10, 10);
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    transition: background-color 0.2s ease;
+}
+
+.delete-btn img {
+    width: 18px;
+    height: 18px;
+}
+
+.course-edit input[type="text"],
+.course-edit input[type="number"] {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #0a1a2b;
+    color: #c7f73a;
+    margin-right: 10px;
+    flex: 1;
+    max-width: 130px;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+#branches h3,
+#semesters h3 {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.branch-btn,
+.semester-btn {
+    background-color: #21c6b3;
+    color: #0a1a2b;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.branch-btn:hover,
+.semester-btn:hover {
+    background-color: #ffca3a;
+    color: #0a1a2b;
+}
+
+.result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.5em;
+    color: #21c6b3;
+}
+
+footer {
+    background-color: transparent;
+    color: lightblue;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 10px;
+}
+
+footer a {
+    margin-left: 2px;
+    font-size: 12px;
+    color: lightblue;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: #21c6b3;
+}
+
+.edit-container {
+    display: none;
+    margin-top: 20px;
+}
+
+
+
+/* Page 1 */
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0a1a2b;
+    /* Dark Navy Blue */
+    color: #c7f73a;
+    /* Lime Green */
+    padding: 5px;
+    margin: 0;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #12263f;
+    /* Dark Navy Blue */
+    color: #c7f73a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000;
+    /* Ensure it stays on top */
+}
+
+.header .logo {
+    display: flex;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.header .menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #c7f73a;
+    width: 40px;
+    /* Reduced width */
+    height: 40px;
+    /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.menu {
+    position: fixed;
+    top: 65px;
+    /* Adjusted to appear below the header and ensure button visibility */
+    right: 0;
+    width: 170px;
+    /* Slightly reduced width */
+    background-color: #12263f;
+    /* Same as header */
+    color: #c7f73a;
+    display: none;
+    flex-direction: column;
+    padding: 20px;
+    /* Reduced padding */
+    z-index: 1000;
+    /*box-shadow: -2px 0 10px rgba(0, 0, 0, 0.7); /* Shadow to create a separation effect */
+    border-radius: 4px;
+    /* Rounded corners */
+}
+
+.menu a {
+    text-decoration: none;
+    color: #c7f73a;
+    padding: 15px;
+    /* Reduced gap between menu items */
+    font-size: 16px;
+    /* Adjusted font size */
+}
+
+.menu.active {
+    display: flex;
+    right: 0;
+    /* Align to right edge */
+}
+
+.container {
+    max-width: 100%;
+    /* Full width to fit mobile screens */
+    width: 350px;
+    /* Fixed width for mobile compatibility */
+    margin: 85px auto 20px;
+    /* Adjust margin to avoid overlap with header */
+    background-color: #12263f;
+    padding: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    box-sizing: border-box;
+    /* Include padding and border in element's total width and height */
+}
+
+h1 {
+    text-align: center;
+    color: #21c6b3;
+    /* Teal */
+}
+
+.semester-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.semester-row label {
+    flex: 1;
+    text-align: left;
+    margin-right: 10px;
+    /* Increased gap between label and text box */
+}
+
+.semester-row input {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #0a1a2b;
+    color: #c7f73a;
+    border: 1px solid #c7f73a;
+    /* Border to highlight input */
+    box-sizing: border-box;
+    /* Ensure padding is included within width */
+}
+
+.semester-row input.sgpabox {
+    width: 100px;
+    /* Reduced length for SGPA */
+    margin-right: 10px;
+    /* Padding between SGPA and Credits box */
+    border: none;
+    text-align: center;
+}
+
+.semester-row input.creditsbox {
+    width: 100px;
+    /* Same length for Total Credits */
+    border: none;
+    text-align: center;
+}
+
+.save-btn {
+    background-color: #ffca3a;
+    color: #0a1a2b;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #21c6b3;
+    color: #0a1a2b;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #1daaa1;
+}
+
+.result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.5em;
+    color: #21c6b3;
+}
+
+footer {
+    background-color: transparent;
+    /* No background color */
+    color: lightblue;
+    /* Light blue text color */
+    text-align: center;
+    padding: 20px;
+    font-size: 10px;
+}
+
+footer a {
+    margin-left: 2px; /* Space between text and the icon */
+    font-size: 12px; /* Size of the GitHub icon */
+    color: lightblue;
+}
+
+footer a:hover {
+    color: #21c6b3; /* Change icon color on hover */
+}
+
+/* Remove arrows for number input fields */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    /* Firefox */
+}
