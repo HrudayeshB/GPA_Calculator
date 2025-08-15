@@ -283,10 +283,35 @@ function selectSemester(branch, semester) {
 
 
 
+//function loadBranchSemesterData() {
+//    const savedBranchData = localStorage.getItem('branchSemesterData');
+//    if (savedBranchData) {
+//        const parsed = JSON.parse(savedBranchData);
+//        Object.assign(branchSemesterData, parsed);
+//    }
+//}
 function loadBranchSemesterData() {
     const savedBranchData = localStorage.getItem('branchSemesterData');
     if (savedBranchData) {
         const parsed = JSON.parse(savedBranchData);
+
+        // Merge saved data into the default, but keep new semesters in defaults
+        for (let branch in branchSemesterData) {
+            if (!parsed[branch]) {
+                // If branch doesn't exist in saved data, just use defaults
+                parsed[branch] = branchSemesterData[branch];
+            } else {
+                // Merge each semester
+                for (let sem in branchSemesterData[branch]) {
+                    if (!parsed[branch][sem]) {
+                        // If semester is missing in saved data, add from defaults
+                        parsed[branch][sem] = branchSemesterData[branch][sem];
+                    }
+                }
+            }
+        }
+
+        // Replace main object with merged result
         Object.assign(branchSemesterData, parsed);
     }
 }
