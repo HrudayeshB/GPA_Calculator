@@ -202,7 +202,12 @@ const branchSemesterData = {
             credits: {
                 "WCN": 3, "CCN": 4, "MSD": 4, "Prof Elec": 3, "Open Elec": 3, "Project Work -1": 2, "RMI": 2, "ASP Lab": 1
             }
-        }// More semesters can be added later
+        },
+        7: {
+            courses: ["ESD", "ECSD", "PE", "IE", "IKS"],
+            credits: {"ESD": 4, "ECSD": 2, "PE": 3, "IE": 3, "IKS": 1}
+        }
+        // More semesters can be added later
     },
     // Other branchesinitialized empty
     CSE: {},
