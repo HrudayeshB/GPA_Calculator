@@ -238,6 +238,12 @@ function selectBranch(branch) {
 
 
 function selectSemester(branch, semester) {
+    // Always store current selection in globals and localStorage
+    window.selectedBranch = branch;
+    window.selectedSemester = semester;
+    localStorage.setItem('selectedBranch', branch);
+    localStorage.setItem('selectedSemester', semester);
+
     const dataExists = branchSemesterData[branch] && branchSemesterData[branch][semester];
 
     if (dataExists) {
@@ -274,13 +280,8 @@ function selectSemester(branch, semester) {
         const courseList = document.getElementById('courseList');
         courseList.innerHTML = '';
         document.getElementById('result').innerText = "";
-
-        // Store branch and semester context in localStorage for saving later if needed
-        localStorage.setItem('selectedBranch', branch);
-        localStorage.setItem('selectedSemester', semester);
     }
 }
-
 
 
 //function loadBranchSemesterData() {
